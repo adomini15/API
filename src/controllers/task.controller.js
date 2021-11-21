@@ -8,11 +8,10 @@ module.exports.index = async (req, res) => {
     
     const tasks = await Task.find();
     
-    res.status(200)
-    res.json({ tasks })
+    res.status(200).json({ tasks })
   } catch (error) {
-    res.status(404)
-    res.json({ message: 'Tasks Not Found'})
+    const errors = handleErrors(error);
+    res.status(404).json({ message: 'Tasks Not Found', errors})
   }
 }
 
@@ -21,13 +20,16 @@ module.exports.show = async (req, res) => {
   const { id: taskID } = req.params;
   
   try {
-    const task = await Task.findById(taskID)
+    const task = await Task.findById(taskID);
 
-    res.status(200)
-    res.json({ task })   
+    if(!task) {
+      throw new Error('Task not found');
+    }
+
+    res.status(200).json({ task })   
 
   } catch (error) {
-    res.status(404)
-    res.json({ message: 'Task Not Found'})
+    const errors = handleErrors(error);
+    res.status(404).json({ errors})
   }
 }

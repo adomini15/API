@@ -7,13 +7,11 @@ module.exports.index = async (req, res) => {
   try {
     const users = await User.find();
 
-    res.status(200);
-    res.json({ users })
+    res.status(200).json({ users })
   } catch (error) {
     const errors = handleErrors(error);
 
-    res.status(400);
-    res.json({ message: "An error occurred to find 'users'", errors})
+    res.status(400).json({ message: "An error occurred to find 'users'", errors})
   }
 }
 
@@ -28,13 +26,11 @@ module.exports.show = async (req, res) => {
       throw new Error('Resource not found')
     }
 
-    res.status(200);
-    res.json({ user })
+    res.status(200).json({ user })
   } catch (error) {
     const errors = handleErrors(error);
 
-    res.status(404);
-    res.json({ errors})
+    res.status(404).json({ errors})
   }
 }
 
@@ -50,13 +46,11 @@ module.exports.update = async (req, res) => {
  
     user.save();
 
-    res.status(200);
-    res.json({ user: userID, message: 'User updated successfully' })
+    res.status(200).json({ user: userID, message: 'User updated successfully' })
   } catch (error) {
     const errors = handleErrors(error);
 
-    res.status(400);
-    res.json({ message: "Resource not updated", errors})
+    res.status(400).json({ message: "Resource not updated", errors})
   }
 }
 
@@ -69,13 +63,11 @@ module.exports.delete = async (req, res) => {
 
     await user.remove()
 
-    res.status(200);
-    res.json({ user: userID })
+    res.status(200).json({ user: userID })
   } catch (error) {
     const errors = handleErrors(error);
 
-    res.status(400);
-    res.json({ message: "Resource not deleted", errors})
+    res.status(400).json({ message: "Resource not deleted", errors})
   }
 }
 
@@ -92,11 +84,9 @@ module.exports.tasks_index = async (req, res) => {
       path: 'tasks'
     }).select('-createdAt -updatedAt');
     
-    res.status(200)
-    res.json({ tasks })
+    res.status(200).json({ tasks })
   } catch (error) {
-    res.status(404)
-    res.json({ message: 'Tasks Not Found'})
+    res.status(404).json({ message: 'Tasks Not Found'})
   }
 }
 
@@ -121,15 +111,13 @@ module.exports.tasks_show = async (req, res) => {
       throw new Error('Task not found')
     }
 
-    res.status(200)
-    res.json({ message: `Task found successfully`, task})  
+    res.status(200).json({ message: `Task found successfully`, task})  
 
   } catch (error) {
 
     const errors = handleErrors(error);
 
-    res.status(404);
-    res.json({ errors})
+    res.status(404).json({ errors})
   }
 }
 
@@ -147,12 +135,10 @@ module.exports.tasks_create = async (req, res) => {
 
     const task = await Task.create({ ...req.body, user })
 
-    res.status(201)
-    res.json({ message: `Task created successfully`, task, user})  
+    res.status(201).json({ message: `Task created successfully`, task, user})  
   } catch (error) {
     const errors = handleErrors(error)
-    res.status(403)
-    res.json({ errors })
+    res.status(403).json({ errors })
   }
 }
 
@@ -181,13 +167,11 @@ module.exports.tasks_update = async (req, res) => {
       throw new Error('Task not existing')
     }
 
-    res.status(200)
-    res.json({ message: `Task updated successfully`, task})
+    res.status(200).json({ message: `Task updated successfully`, task})
 
   } catch (error) {
     const errors = handleErrors(error)
-    res.status(403)
-    res.json({ errors })
+    res.status(403).json({ errors })
   }
 }
 
@@ -214,14 +198,12 @@ module.exports.tasks_delete = async (req, res) => {
 
     task.remove()
 
-    res.status(200)
-    res.json({ message: `Task deleted successfully`, task})  
+    res.status(200).json({ message: `Task deleted successfully`, task})  
 
   } catch (error) {
 
     const errors = handleErrors(error);
 
-    res.status(404);
-    res.json({ errors})
+    res.status(404).json({ errors})
   }
 }

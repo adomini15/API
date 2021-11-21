@@ -45,7 +45,6 @@ taskSchema.post('save', async function (task, next) {
       runValidators: false
     });
 
-
     next()
 
   } catch (error) {

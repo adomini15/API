@@ -3,7 +3,14 @@ const LoginError = require('../Errors/LoginError')
 
 module.exports = (error) => {
   const errors = {};
-  
+	
+  if(error.code === 11000) { 
+      Object.keys(error.keyPattern).forEach((path) => {
+     	errors[path] = `${path} already used`;
+      })
+
+      return errors;
+  }
 
   if(error instanceof LoginError) {
     errors['email'] = error.message.email;
